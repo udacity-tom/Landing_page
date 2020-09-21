@@ -7,7 +7,9 @@
  * To learn more, visit: https://css-tricks.com/reboot-resets-reasoning/
  *
 */
-
+html {
+    scroll-behavior: smooth;
+}
 
 /* ---- Base Rules ---- */
 body {
@@ -64,36 +66,14 @@ section {
 /* ---- Module Rules ---- */
 
 /* Navigation Styles*/
-
-.navbar__menu {
-    max-height: 400px;
-    display: 
-}
-
-
-
 .navbar__menu ul {
-    /* display: table; */
-    height: 80px;
     padding-left: 0;
-    padding-right: 50px;
-    margin: 20px;
-    font-size: 2em;
-    /* text-align: right; */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-end;
+    margin: 0;
+    text-align: right;
 }
 
 .navbar__menu li {
-    /* display: inline-block; */
-    display: flex;
-    list-style: none;
-    color: black;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    display: inline-block;
 }
 
 .navbar__menu .menu__link {
@@ -102,6 +82,7 @@ section {
     font-weight: bold;
     text-decoration: none;
     color: #000;
+    text-align: center;
 }
 
 .navbar__menu .menu__link:hover {
@@ -114,8 +95,9 @@ section {
 .page__header {
     background: #fff;
     position: fixed;
-    top: 0;
-    width: 100%;
+    top: 20px;
+    left: 20px;
+    /* width: 100%; */
     z-index: 5;
 }
 
