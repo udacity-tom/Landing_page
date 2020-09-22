@@ -137,9 +137,13 @@ function hideNav() {
 // let last_known_scroll_position = 0;
 // let ticking = false;
 
+
+
+
+
 function addListener(){
     const highlightNav = document.getElementsByClassName('menu__link');
-    window.addEventListener('scroll', function(event) {
+    window.addEventListener('scroll', function() {
         const currentPos = sections.getBoundingClientRect();
         console.log(currentPos.top,currentPos.bottom);
     
@@ -153,55 +157,78 @@ function addListener(){
     } )
 }
 
-
-
 function doSomething() {
     const sections = getSections();
+    const allItems = document.getElementsByClassName('menu__link');
+    console.log("all itemsW", allItems);
     // const menuItem = getMenuItem();
     for(const section of sections ) {
         window.addEventListener('scroll', function(event) {
             const currentPos = section.getBoundingClientRect();
+            const currentItem = document.querySelector('.menu__link.'+section.id);
+            console.log("currentItem", currentItem);
             console.log("I am section ",section,currentPos.top,currentPos.bottom);
-        console.log("html height", section.clientHeight);
+        // console.log("html height", section.clientHeight);
             if(currentPos.top < 150 && currentPos.bottom > 150 ){
-                
                 section.classList.add('active');
+                currentItem.classList.add('active');
             } else {
                 section.classList.remove('active');
+                currentItem.classList.remove('active');
             }
         } )
     }
 }   
 
+function getCurrentItem() {
+    window.addEventListener('DOMContentLoaded', () => {
+        const currentItem = document.getElementsByClassName('menu__link '+'section1');
+        return currentItem;
+    })
+    
+}
+
+//adds a highlight on the nav on the button
+document.addEventListener('DOMContentLoaded', function getMenuItem(){
+    const allItems = document.getElementsByClassName('menu__link');
+    console.log("all itemsW", allItems);
+    for(let i=0; i < allItems.length; i++){
+        // allItems.classList.remove('active');
+     allItems[i].addEventListener('click', () => {
+        allItems[i].classList.add('active');
+    })}
+
+})
+
 doSomething();
 
 
+function positionHead () {
+    setTimeout(4000);
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    const pageHead = document.getElementsByClassName('page__header');
+    // pageHead.setAttribute(left, (vw/2));
+    console.log("vw is", vw, pageHead);
+}
+// positionHead();
+document.addEventListener('DOMContentLoaded', positionHead());
+
+
+
 // function listen
-
-
 // window.addEventListener('scroll', function(event) {
 //   last_known_scroll_position = window.scrollY;
-
-
 //   doSomething(window.scrollY);
 //   if (!ticking) {
 //     window.requestAnimationFrame(function() {
 //       doSomething(last_known_scroll_position);
 //       console.log(last_known_scroll_position);
-   
 //       ticking = false;
 //     });
-
 //     ticking = true;
 //   }
 // });
-
-
 // window.addEventListener()
-
-
-
-
 
 function setActiveSection(){
     // let rect = el
@@ -226,34 +253,21 @@ buildNav();
 scrollToSection();
 // Set sections as active
 setActiveSection();
-
 // function addClassToMenu() {
 // const navbarAddClass = document.querySelectorAll('.menu__Link');
 // console.log(".menu__link ", navbarAddClass);
 // const navElementsAddClass = getSectionsAsArray();
 // for(let i=0; i < navbarAddClass;i++){
 //     console.log(navbarAddClass[i],navElementsAddClass[i]);
-    
 //     navbarAddClass[i].classList.add(navElementsAddClass[i]);
 // }
 // }
-
 // addClassToMenu();
 
 // function getMenuItem(){
 //     const allItems = document.getElementsByClassName('menu__link');
 //     console.log("all itemsW", allItems);
 // }
-
-document.addEventListener('DOMContentLoaded', function getMenuItem(){
-    const allItems = document.getElementsByClassName('menu__link');
-    console.log("all itemsW", allItems);
-    for (let allItem in allItems){
-     allItem.addEventListener('click', (allItem) => {
-        allItem.ClassList.add('active');
-    })}
-
-})
 
 
 
