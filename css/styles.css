@@ -107,6 +107,7 @@ section {
     background: #333;
     color: #fff;
     transition: ease 0.3s all;
+    /* border-radius: 10px; */
 }
 
 /* Header Styles */
@@ -115,6 +116,8 @@ section {
     position: fixed;
     top: 2vw;
     left: 40%;
+    /* font-size: 1.2em; */
+    border-radius: 10px;
     /* text-align: center; */
     /* right: 0.5vw; */
     /* width: 100%; */
@@ -223,6 +226,7 @@ section:nth-of-type(3n + 1) .landing__container::after {
 .menu__link.active {
     background-color: #000;
     color: #fff;
+    /* border-radius: 10px; */
 }
 
 

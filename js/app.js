@@ -18,41 +18,70 @@
  * 
 */
 
-const navbarList = document.getElementById('navbar__list');
-console.log(navbarList);
+
 
 /**
  * End Global Variables
  * Start Helper Functions
  * 
 */
-//gets sections creates array of each section as basis for li
-function getSectionsAsArray() {
-    const sections = getSections();
-    let navSections = []; 
-    for(let i=0; i < sections.length; i++){
-        navSections[i] = sections[i].attributes.id.textContent;
-    }
-    return (navSections);
-}
+// //gets sections creates array of each section as basis for li
+// function getSectionsAsArray() {
+//     const sections = getSections();
+//     let navSections = []; 
+//     for(let i=0; i < sections.length; i++){
+//         navSections[i] = sections[i].attributes.id.textContent;
+//     }
+//     return (navSections);
+// }
 //Adds fourth section referred to in rubric
-function addSection(){
-    
+function addSection(title, text1, text2){
+    const newSection = document.createElement('section');
+    const newDiv = document.createElement('div');
+    const newTitle = document.createElement('h2');
+    const newPara = document.createElement('p');
+    const newPara2 = document.createElement('p');
+    // const currentMain = document.getElementsByTagName('footer');
+    const currentSections = getSections();
+    const currentSectionsLen = currentSections.length + 1;
+    // console.log('currentMain', currentMain.length, currentMain);
+    newSection.setAttribute('id','section'+currentSectionsLen);
+    newSection.setAttribute('data-nav','Section '+currentSectionsLen);
+    newDiv.className = "landing__container";
+    // const newTitleText = "Section"
+    // const sectionTextP1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.";
+    // const sectionTextP2 = "Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non.";
+    newPara2.textContent = text2;
+    newPara.textContent = text1;
+    newTitle.textContent = title;
+    newPara.appendChild(newPara2);
+    newDiv.appendChild(newTitle);
+    newDiv.appendChild(newPara);
+    newSection.appendChild(newDiv);
+
+
+    const lastSection = currentSections[currentSections.length-1];
+    // const theLastSection = document.querySelector('#section3');
+    // console.log("lastSection", lastSection);
+    let navbarFragment = document.createDocumentFragment();
+    navbarFragment.appendChild(newSection);
+    // console.log("navbarFragmen", navbarFragment);
+    // const footerClass = document.querySelector('.page__footer');
+    lastSection.parentElement.appendChild(navbarFragment);
+
 }
+
+const sectionTextP1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.";
+const sectionTextP2 = "Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non.";
+const sectionTitle = "Section 4";
+
+
+document.addEventListener('DOMContentLoaded', addSection(sectionTitle, sectionTextP1, sectionTextP2));
 
 function getSections() {
     const sections = document.querySelectorAll('section');
     return sections;
 }
-
-
-// const navbar
-// function addListener (element) {
-//     element.addEventListener('scroll',() =>{
-
-//     })
-// }
-
 
 /**
  * End Helper Functions
@@ -61,7 +90,6 @@ function getSections() {
 */
 
 // build the nav
-
 function createHome() {
     const homeLink = document.createElement('a');
     homeLink.className = "menu__link";
@@ -73,12 +101,11 @@ function createHome() {
     return homeLink;
 }
 
-
-
-
-
 function buildNav() {
-    const navElements = getSectionsAsArray();
+    const navbarList = document.getElementById('navbar__list');
+    // console.log(navbarList);
+    // const navElements = getSectionsAsArray();
+    const navElements = getSections();
     let navbarFragment = document.createDocumentFragment();
     // const homeLink = createHome();
     // homeLink.setAttribute('href', Thetopof the page);)
@@ -86,78 +113,47 @@ function buildNav() {
     for( let i=0; i < navElements.length; i++){
         let navbarListItem = "";
         navbarLink = document.createElement('a');
-        
-        navbarLink.className = "menu__link "+navElements[i];
-        navbarLink.addEventListener( 'click', function addClass() {
-            // this.ClassList.add('active');
-        });
-        // navbarLink.ClassList.add(navElements[i]);
+        navbarLink.className = "menu__link "+navElements[i].id;
+        // navbarLink.addEventListener( 'click', function addClass() {        });
         navbarLink.setAttribute('href','#section'+(1+i));
         navbarListItem = document.createElement('li');
-        navbarLink.textContent = navElements[i];
+        navbarLink.textContent = navElements[i].dataset.nav;
+        // const testNav = getSections();
+        // console.log("testNav sections are ", testNav);
+        // navbarLink.textContent = testNav[i].dataset.nav;
         navbarListItem.appendChild(navbarLink);
         console.log("navbarlistitem ",navbarListItem);
-        // navbarLink.appendChild(addEventListener())
-        
         navbarFragment.appendChild(navbarListItem);
     }
-    // const navbarList = document.getElementById('navbar__list');
-    // const navbarList = getNavbarList();
     navbarList.appendChild(navbarFragment);
 }
 
 function hideNav() {
 //setTimeout(for some time) Then add class hide nav
+    const currentNav = document.getElementsByClassName('navbar__menu');
+    document.window.setTimeout(3000);
+    currentNav.setAttribute
+
+
 }
 
-// Add class 'active' to section when near top of viewport
-// for(section in sections) 
-
-    // console.log("current section is", sections[i]);
-    // window.addEventListener('scroll', (el) => {
-        // for(let i=0; i < sections.length; i++){
-        // console.log(el);
-        // console.log("current section is", sections[1]);
-        // if (sections[1].scrollY >0){
-        //     console.log("yes");
-            // section.style.background = "yellow";
-        // }
-        // console.log(el.getBoundingClientRect);
-        // let currentCont = el.getBoundingClientRect();
-        
-        // if (currentCont.top <= 0 && currentCont.bottom >= 80 || document.documentElement.clientHeight) {
-        //     document.getElementById(section).classList.add('active');
-        // } else{
-        //     document.getElementById(section).classList.remove('active');
-        // }   
-     
-// }
-// })
-
-// let last_known_scroll_position = 0;
-// let ticking = false;
-
-
-
-
-
-function addListener(){
-    const highlightNav = document.getElementsByClassName('menu__link');
-    window.addEventListener('scroll', function() {
-        const currentPos = sections.getBoundingClientRect();
-        console.log(currentPos.top,currentPos.bottom);
+// function addListener(){
+//     const highlightNav = document.getElementsByClassName('menu__link');
+//     window.addEventListener('scroll', function() {
+//         const currentPos = sections.getBoundingClientRect();
+//         console.log(currentPos.top,currentPos.bottom);
     
-        if(currentPos.top < 10 && currentPos.bottom > -10){
-            section.classList.add('active');
-            document.getElementById()
+//         if(currentPos.top < 10 && currentPos.bottom > -10){
+//             section.classList.add('active');
+//             document.getElementById()
 
-        } else {
-            sections.classList.remove('active');
-        }
-    } )
-}
+//         } else {
+//             sections.classList.remove('active');
+//         }
+//     } )
+// }
 
-function doSomething() {
+function checkPageLocation() {
     const sections = getSections();
     const allItems = document.getElementsByClassName('menu__link');
     console.log("all itemsW", allItems);
@@ -165,6 +161,8 @@ function doSomething() {
     for(const section of sections ) {
         window.addEventListener('scroll', function(event) {
             const currentPos = section.getBoundingClientRect();
+            const currentItem2 = document.getElementsByClassName('.menu__link');
+            console.log("currentItem2", currentItem2);
             const currentItem = document.querySelector('.menu__link.'+section.id);
             console.log("currentItem", currentItem);
             console.log("I am section ",section,currentPos.top,currentPos.bottom);
@@ -200,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function getMenuItem(){
 
 })
 
-doSomething();
+checkPageLocation();
 
 
 function positionHead () {
