@@ -74,9 +74,11 @@ function addSection(title, text1, text2){
 const sectionTextP1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.";
 const sectionTextP2 = "Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non.";
 const sectionTitle = "Section 4";
+const sectionTitle2 = "Section 5";
 
 
 document.addEventListener('DOMContentLoaded', addSection(sectionTitle, sectionTextP1, sectionTextP2));
+document.addEventListener('DOMContentLoaded', addSection(sectionTitle2, sectionTextP1, sectionTextP2));
 
 function getSections() {
     const sections = document.querySelectorAll('section');
@@ -122,7 +124,7 @@ function buildNav() {
         // console.log("testNav sections are ", testNav);
         // navbarLink.textContent = testNav[i].dataset.nav;
         navbarListItem.appendChild(navbarLink);
-        console.log("navbarlistitem ",navbarListItem);
+        // console.log("navbarlistitem ",navbarListItsem);
         navbarFragment.appendChild(navbarListItem);
     }
     navbarList.appendChild(navbarFragment);
@@ -156,16 +158,26 @@ function hideNav() {
 function checkPageLocation() {
     const sections = getSections();
     const allItems = document.getElementsByClassName('menu__link');
-    console.log("all itemsW", allItems);
+    sections[0].onscroll = logScroll;
+    function logScroll(e) {
+        console.log(e.target.scrollTop);
+    }
+    // console.log("all itemsW", allItems);
     // const menuItem = getMenuItem();
     for(const section of sections ) {
-        window.addEventListener('scroll', function(event) {
-            const currentPos = section.getBoundingClientRect();
-            const currentItem2 = document.getElementsByClassName('.menu__link');
-            console.log("currentItem2", currentItem2);
+        window.addEventListener('onscroll', function(event) {
+            // const currentPos = section.getBoundingClientRect();
+            
+
+            console.log(event);
+            // fadeNav();
+            // const currentItem2 = document.getElementsByClassName('.menu__link');
+            // console.log("currentItem2", currentItem2);
             const currentItem = document.querySelector('.menu__link.'+section.id);
-            console.log("currentItem", currentItem);
-            console.log("I am section ",section,currentPos.top,currentPos.bottom);
+            //TODO:Check why only querySelector works and not getElementsByClassName->SUSPECT:QS returns NodeList, not *live* vs others//
+
+            // console.log("currentItem", currentItem);
+            // console.log("I am section ",section,currentPos, currentPos.top,currentPos.bottom);
         // console.log("html height", section.clientHeight);
             if(currentPos.top < 150 && currentPos.bottom > 150 ){
                 section.classList.add('active');
@@ -177,26 +189,66 @@ function checkPageLocation() {
         } )
     }
 }   
+const sections = getSections();
+sections[0].onscroll = logScroll;
+    function logScroll(e) {
+        console.log(e.target.scrollTop);
+    }
 
-function getCurrentItem() {
-    window.addEventListener('DOMContentLoaded', () => {
-        const currentItem = document.getElementsByClassName('menu__link '+'section1');
-        return currentItem;
-    })
-    
+function menufade(){
+
 }
 
-//adds a highlight on the nav on the button
-document.addEventListener('DOMContentLoaded', function getMenuItem(){
-    const allItems = document.getElementsByClassName('menu__link');
-    console.log("all itemsW", allItems);
-    for(let i=0; i < allItems.length; i++){
-        // allItems.classList.remove('active');
-     allItems[i].addEventListener('click', () => {
-        allItems[i].classList.add('active');
-    })}
+function getCurPos (element) {
+    const currentPos = element.getBoundingClientRect();
+    return currentPos;
+}
 
-})
+function fadeNav (){
+    console.log("infadeNav");
+    const sections = getSections();
+    const startPos2 = Number(getCurPos(sections[0]).top);
+    const startPos = startPos2.toString();
+    // let startPos = currentPos.top;
+    console.log(typeof startPos);
+    const pageHead = document.querySelector('.page__header');
+    let finishPos = getCurPos(sections[0]).top;
+    console.log(startPos,finishPos);
+    if(Number(startPos) == finishPos){
+        console.log("Yes");
+        window.setTimeout(4000);
+        
+        pageHead.classList.add('fade-out');
+    } else {
+    pageHead.classList.remove('fade-out');
+    window.setTimeout(4000);
+
+    }
+}
+
+// function getCurrentItem() {
+//     window.addEventListener('DOMContentLoaded', () => {
+//         const currentItem = document.getElementsByClassName('menu__link '+'section1');
+//         return currentItem;
+//     })
+    
+// }
+
+//adds a highlight on the nav on the button
+
+
+
+
+// document.addEventListener('DOMContentLoaded', function getMenuItem(){
+//     const allItems = document.getElementsByClassName('menu__link');
+//     // console.log("all itemsW", allItems);
+//     for(let i=0; i < allItems.length; i++){
+//         // allItems.classList.remove('active');
+//      allItems[i].addEventListener('click', () => {
+//         allItems[i].classList.add('active');
+//     })}
+
+// })
 
 checkPageLocation();
 
@@ -204,14 +256,18 @@ checkPageLocation();
 function positionHead () {
     setTimeout(4000);
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-    const pageHead = document.getElementsByClassName('page__header');
-    // pageHead.setAttribute(left, (vw/2));
-    console.log("vw is", vw, pageHead);
+    const clientW = Math.max(document.documentElement.clientWidth);
+    const winIn = Math.max(window.innerWidth || 0);
+    // const pageHead = document.getElementsByClassName('page__header');
+    const pageHead = document.querySelector('.page__header');
+    console.log(pageHead);
+    pageHead.style.marginLeft = vw/(vw-700)/2+"px";
+    console.log("vw is",winIn, clientW, vw, pageHead);
 }
 // positionHead();
-document.addEventListener('DOMContentLoaded', positionHead());
+// document.addEventListener('DOMContentLoaded', positionHead());
 
-
+// document.addEventListener('DOMContentLoaded', addSection(sectionTitle, sectionTextP1, sectionTextP2));
 
 // function listen
 // window.addEventListener('scroll', function(event) {
