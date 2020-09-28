@@ -74,13 +74,10 @@ section {
 }
 
 /*------animation rules------*/
-.fade-out {
+.hide {
     opacity: 0;
-    animation: fadeOut ease 3s;
     /*----TODO: Check Browser compatibility---*/
-    
 }
-
 
 /* ---- Module Rules ---- */
 
@@ -108,10 +105,6 @@ section {
     box-shadow: 0 20px 20px rgba(0,0,0,0.2);
 }
 
-.navbar_menu .hide {
-    display: none;
-}
-
 .navbar__menu .menu__link:hover {
     background: rgb(235, 118, 118);
     color: #fff;
@@ -125,9 +118,9 @@ section {
     background: #fff;
     position: fixed;
     top: 2vw;
-    /* left: 40%; */
+    left: 3%;
     /* font-size: 1.2em; */
-    border-radius: 10px;
+    /* border-radius: 10px; */
     /* text-align: center; */
     /* right: 0.5vw; */
     /* width: 100%; */
