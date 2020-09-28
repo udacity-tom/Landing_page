@@ -19,8 +19,6 @@
 */
 const sectionTextP1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.";
 const sectionTextP2 = "Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non.";
-const sectionTitle = "Section 4";
-const sectionTitle2 = "Section 5";
 /**
  * End Global Variables
  * Start Helper Functions
@@ -89,43 +87,43 @@ function showNav() {
     pageHead.classList.remove('hide');
 }
 
-function navVisible () {
-    window.setTimeout(showNav, 200);
-    window.setTimeout(hideNav, 6000);
+function navVisible() {
+    showNav();
+    window.setTimeout(hideNav, 5000);
 }
+
 //Sets active Nav highlight
-function setNavHighlight () {
-    const sections = getSections ();
+function setNavHighlight() {
+    // navVisible();
+    const sections = getSections();
     for(const section of sections ) {
-    const currentPos = getCurPos (section);
-    const currentItem = document.querySelector('.menu__link.'+section.id);
-    if(currentPos.top < 150 && currentPos.bottom > 150 ){
-        section.classList.add('active');
-        currentItem.classList.add('active');
-        
-    } else {
-        section.classList.remove('active');
-        currentItem.classList.remove('active');
+        const currentPos = getCurPos (section);
+        const currentItem = document.querySelector('.menu__link.'+section.id);
+        if(currentPos.top < 150 && currentPos.bottom > 150 ){
+            section.classList.add('active');
+            currentItem.classList.add('active');
+        } else {
+            section.classList.remove('active');
+            currentItem.classList.remove('active');
+        }
     }
-    // if(currentPos.top < 150 )
 }
-}
+
 //Adds event listner to window to set navigation for section
-function checkPageLocation () { 
-    window.addEventListener('scroll', function(event) {
-    setNavHighlight ();
-    navVisible ();
-    showScrollToTop ();
-        } ) 
+function checkPageLocation() { 
+        window.addEventListener('scroll', function(event) {
+            navVisible();
+            setNavHighlight();
+            showScrollToTop();
+    } ) 
 } 
 
-function showScrollToTop () {
+//shows Scroll To Top Icon
+function showScrollToTop() {
 const headClass = document.querySelector('.main__hero');    
 const topIcon = document.querySelector('.topIcon');
 const currentPos = getCurPos(headClass);
-// const isTrue = 
-// console.log("showscrolltotop", currentPos);
-    if(currentPos.height+currentPos.top < 0){
+    if(currentPos.height+currentPos.top < 0 ){
         topIcon.classList.remove('hide');    
     } else {
         topIcon.classList.add('hide');
@@ -133,27 +131,25 @@ const currentPos = getCurPos(headClass);
 }
 
 //Retrieves current window position
-function getCurPos (element) {
+function getCurPos(element) {
     const currentPos = element.getBoundingClientRect();
     return currentPos;
 }
 
 //Scrolls to top of page
-function scrollToTop (){
+function scrollToTop(){
     window.scrollTo(0,0);
 }
 
 //Adds a go to top icon at page bottom
-function addTopIcon () {
+function addTopIcon() {
     const footElem = document.querySelector('footer');
-    console.log("footer elem",footElem);
     const upFrag = document.createDocumentFragment();
     const upLink = document.createElement('a');
     const upPara = document.createElement('p');
     const upText = "\u2191";
     upPara.textContent = upText;
-    upPara.style.cssText = 'position: fixed; display: inline-block; bottom: 0.1em; right: 1em; color:#fff; background-color: #fff; font-size: 6em; line-height: 0;';
-    // upPara.addEventListener('click', () => {window.scrollTo({top:0})});
+    upPara.style.cssText = 'position: fixed; display: inline-block; bottom: 0.1em; right: 1em; color:#fff; background-color: #fff; font-size: 10em; line-height: 0;';
     upPara.addEventListener('click', () => scrollToTop ());
     upLink.appendChild(upPara);
     upLink.className = 'topIcon hide';
@@ -168,60 +164,12 @@ function addTopIcon () {
 */
 
 //Adds new Section programmatically
-document.addEventListener('DOMContentLoaded', addSection(sectionTitle, sectionTextP1, sectionTextP2));
-// document.addEventListener('DOMContentLoaded', addSection(sectionTitle2, sectionTextP1, sectionTextP2));
-checkPageLocation ();
+document.addEventListener('DOMContentLoaded', addSection("Section 4", sectionTextP1, sectionTextP2));
+//***adds additional section*** // document.addEventListener('DOMContentLoaded', addSection("Section 5", sectionTextP1, sectionTextP2));
+checkPageLocation();
 // Build menu 
-buildNav ();
-// Scroll to section on link click
-scrollToTop ();
-addTopIcon ();
-
-
-
-
-
-
-// Set sections as active
-// setActiveSection();
-// function addClassToMenu() {
-// const navbarAddClass = document.querySelectorAll('.menu__Link');
-// console.log(".menu__link ", navbarAddClass);
-// const navElementsAddClass = getSectionsAsArray();
-// for(let i=0; i < navbarAddClass;i++){
-//     console.log(navbarAddClass[i],navElementsAddClass[i]);
-//     navbarAddClass[i].classList.add(navElementsAddClass[i]);
-// }
-// }
-// addClassToMenu();
-
-// function getMenuItem(){
-//     const allItems = document.getElementsByClassName('menu__link');
-//     console.log("all itemsW", allItems);
-// }
-
-
-
-
-
-// document.addEventListener('DOMContentLoaded', function getMenuItem(){
-//     const allItems = document.getElementsByClassName('menu__link');
-//     console.log("all itemsW", allItems);
-//     for (let allItem in allItems){
-//      function addIt () {allItem.addEventListener('click', function addClass() {
-//         this.ClassList.add('active');
-//     })}}
-
-// })
-
-
-
-
-
-
-
-
-
-// navbarLink.addEventListener( 'click', function addClass() {
-    // this.ClassList.add('active');
-// });
+buildNav();
+// Scroll to on page load
+scrollToTop();
+//Programmatically add goto top icon.
+addTopIcon();
